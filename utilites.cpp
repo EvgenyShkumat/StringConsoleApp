@@ -1,8 +1,4 @@
 #include "utilites.h"
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
 
 vector<int> prefix_func(const string& substr) {
 	vector<int> arr(substr.size());
@@ -26,5 +22,61 @@ vector<int> prefix_func(const string& substr) {
 	}
 
 	return arr;
+}
+
+int search(const string& base, const string& substr) {
+	int pos = -1;
+
+	vector<int> arr = prefix_func(substr);
+
+	for (int i = 0, j = 0; i < base.size();) {
+		if (base[i] == substr[j]) {
+			i++;
+			j++;
+		}
+		
+		if (j == substr.size()) {
+			pos = i - j;
+			break;
+		}
+		else if (i < base.size() && base[i] != substr[j]) {
+			if (j != 0) {
+				j = arr[j - 1];
+			}
+			else {
+				i++;
+			}
+		}
+	}
+
+	return pos;
+}
+
+int count(const string& base, const string& substr) {
+	int count = 0;
+
+	vector<int> arr = prefix_func(substr);
+
+	for (int i = 0, j = 0; i < base.size();) {
+		if (base[i] == substr[j]) {
+			i++;
+			j++;
+		}
+
+		if (j == substr.size()) {
+			count++;
+			j = arr[j - 1];
+		}
+		else if (i < base.size() && base[i] != substr[j]) {
+			if (j != 0) {
+				j = arr[j - 1];
+			}
+			else {
+				i++;
+			}
+		}
+	}
+
+	return count;
 }
 
