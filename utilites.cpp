@@ -24,6 +24,28 @@ vector<int> prefix_func(const string& substr) {
 	return arr;
 }
 
+vector<int> z_func(const string& s) {
+	vector<int> zarr(s.size());
+	int left = 0, right = 0;
+
+	for (int i = 1; i < s.size(); i++) {
+		if (i <= right) { 
+			zarr[i] = min(right - i + 1, zarr[i - left]);
+		}
+
+		while (i + zarr[i] < s.size() && s[zarr[i]] == s[zarr[i] + i]) {
+			zarr[i]++;
+		}
+
+		if (i + zarr[i] - 1 > right) {
+			left = i;	
+			right = i + zarr[i] - 1;
+		}
+	}
+
+	return zarr;
+}
+
 int search(const string& base, const string& substr) {
 	int pos = -1;
 
@@ -79,4 +101,5 @@ int count(const string& base, const string& substr) {
 
 	return count;
 }
+
 
