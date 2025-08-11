@@ -46,6 +46,7 @@ vector<int> z_func(const string& s) {
 	return zarr;
 }
 
+//search and count funcs are based on KMP algo
 int search(const string& base, const string& substr) {
 	int pos = -1;
 
@@ -102,4 +103,15 @@ int count(const string& base, const string& substr) {
 	return count;
 }
 
+vector<int> get_borders_length(const string& s) {
+	vector<int> zarr = z_func(s);
+	vector<int> borders;
 
+	for (int i = 0; i < s.size(); i++) {
+		if (i + zarr[i] == s.size()) {
+			borders.push_back(zarr[i]);
+		}
+	}
+
+	return borders;
+}
